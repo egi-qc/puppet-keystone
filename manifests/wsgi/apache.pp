@@ -73,6 +73,18 @@
 #     apache::vhost ssl parameters.
 #     Optional. Default to apache::vhost 'ssl_*' defaults.
 #
+#   [*ssl_verify_depth*]
+#     (optional) Maximum depth of CA Certificates in Client Certificate verification.
+#     Defaults to undef.
+#
+#   [*ssl_verify_client*]
+#     (optional) Type of Client Certificate verification.
+#     Defaults to undef.
+#
+#   [*ssl_options*]
+#     (optional) Configure various SSL engine run-time options.
+#     Defaults to undef.
+#
 #   [*priority*]
 #     (optional) The priority for the vhost.
 #     Defaults to '10'
@@ -128,6 +140,9 @@ class keystone::wsgi::apache (
   $ssl_crl_path       = undef,
   $ssl_crl            = undef,
   $ssl_certs_dir      = undef,
+  $ssl_verify_depth   = undef,
+  $ssl_verify_client  = undef,
+  $ssl_options        = undef,
   $threads            = $::processorcount,
   $priority           = '10',
   $wsgi_script_ensure = 'file',
@@ -240,6 +255,9 @@ class keystone::wsgi::apache (
     ssl_crl_path                => $ssl_crl_path,
     ssl_crl                     => $ssl_crl,
     ssl_certs_dir               => $ssl_certs_dir,
+    ssl_verify_client           => $ssl_verify_client,
+    ssl_verify_depth            => $ssl_verify_depth,
+    ssl_options                 => $ssl_options,
     wsgi_daemon_process         => 'keystone_main',
     wsgi_daemon_process_options => $wsgi_daemon_process_options_main,
     wsgi_process_group          => 'keystone_main',
@@ -265,6 +283,9 @@ class keystone::wsgi::apache (
       ssl_crl_path                => $ssl_crl_path,
       ssl_crl                     => $ssl_crl,
       ssl_certs_dir               => $ssl_certs_dir,
+      ssl_verify_client           => $ssl_verify_client,
+      ssl_verify_depth            => $ssl_verify_depth,
+      ssl_options                 => $ssl_options,
       wsgi_daemon_process         => 'keystone_admin',
       wsgi_daemon_process_options => $wsgi_daemon_process_options_admin,
       wsgi_process_group          => 'keystone_admin',
