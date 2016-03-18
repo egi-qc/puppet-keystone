@@ -21,7 +21,12 @@ Puppet::Type.type(:keystone_paste_ini).provide(
 
   # this needs to be removed. This has been replaced with the class method
   def file_path
-    self.class.file_path
+    case Facter.value(:osfamily)
+    when 'RedHat'
+      '/usr/share/keystone/keystone-dist-paste.ini'
+    else
+      '/etc/keystone/keystone-paste.ini'
+    end
   end
 
 end
